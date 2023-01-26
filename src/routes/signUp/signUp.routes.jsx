@@ -36,9 +36,9 @@ const SignUp = () => {
         setFormFields({...formFields, [name]: value});
     };
 
-    const resetFormFields = () => {
-        setFormFields(defaultFormFields);
-    }
+    // const resetFormFields = () => {
+    //     setFormFields(defaultFormFields);
+    // }
     
     const handleSubmit = async (event) => {
         event.preventDefault();

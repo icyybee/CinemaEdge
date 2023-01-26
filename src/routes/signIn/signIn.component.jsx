@@ -35,9 +35,9 @@ const SignIn = () => {
         setFormFields({...formFields, [name]: value});
     };
 
-    const resetFormFields = () => {
-        setFormFields(defaultFormFields);
-    }
+    // const resetFormFields = () => {
+    //     setFormFields(defaultFormFields);
+    // }
     
     // const signInWithGoogle = async () => {
     //     await signInWithGooglePopup();
