@@ -1,0 +1,42 @@
+@import '../../App.scss';
+
+.form__rest {
+    margin-top: 3rem;
+    padding: 0rem 10rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+
+    & .remember {
+        display: flex;
+
+        & input[type=checkbox]:checked {
+            accent-color: $color-primary-light;
+            color: $color-white;
+        }
+
+        & label {
+            margin-left: 1rem;
+            font-size: 1.2rem;
+            color: $color-white;
+        }
+    }
+
+    & .signup__form {
+        text-align: center;
+        width: 100%;
+        
+        & p {
+            font-size: 1.2rem;
+        }
+        
+        & a {
+            color: $color-primary;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+    }
+}
