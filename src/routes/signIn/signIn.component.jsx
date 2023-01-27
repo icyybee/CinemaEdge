@@ -24,11 +24,6 @@ const SignIn = () => {
     const { email, password } = formFields;
     const [passwordType, setPasswordType] = useState('password');
 
-    const logGoogleUser = async () => {
-        const {user} = await signInWithGooglePopup();
-        const userDocRef = await createUserDocumentFromAuth(user);
-    }
-
     const togglePassword = () => {
         if (passwordType === 'password') {
             setPasswordType('text');
@@ -43,13 +38,14 @@ const SignIn = () => {
         setFormFields({...formFields, [name]: value});
     };
 
-    // const resetFormFields = () => {
-    //     setFormFields(defaultFormFields);
-    // }
+    const resetFormFields = () => {
+        setFormFields(defaultFormFields);
+    }
     
-    // const signInWithGoogle = async () => {
-    //     await signInWithGooglePopup();
-    // };
+    const signInWithGoogle = async () => {
+        const {user} = await signInWithGooglePopup();
+        await createUserDocumentFromAuth(user);
+    };
     
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -78,7 +74,7 @@ const SignIn = () => {
     return (
         <div className="signin bg">
             <Form
-                logGoogleUser={logGoogleUser}
+                signInWithGoogle={signInWithGoogle}
                 handleSubmit={handleSubmit} 
                 text='Login'
                 google='Sign in with google'

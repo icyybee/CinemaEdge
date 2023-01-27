@@ -28,10 +28,10 @@ const SignUp = () => {
     const { name, email, password, confirmPassword } = formFields;
     const [passwordType, setPasswordType] = useState('password');
 
-    const logGoogleUser = async () => {
+    const signInWithGoogle = async () => {
         const {user} = await signInWithGooglePopup();
-        const userDocRef = await createUserDocumentFromAuth(user);
-    }
+        await createUserDocumentFromAuth(user);
+    };
 
     const togglePassword = () => {
         if (passwordType === 'password') {
@@ -81,7 +81,7 @@ const SignUp = () => {
     return (
         <div className="signup bg">
             <Form 
-                logGoogleUser={logGoogleUser}
+                signInWithGoogle={signInWithGoogle}
                 handleSubmit={handleSubmit}
                 text='Sign up'
                 google='Sign up with google'
