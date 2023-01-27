@@ -31,11 +31,6 @@ const SignUp = () => {
     const { name, email, password, confirmPassword } = formFields;
     const [passwordType, setPasswordType] = useState('password');
 
-    const signInWithGoogle = async () => {
-        const {user} = await signInWithGooglePopup();
-        await createUserDocumentFromAuth(user);
-    };
-
     const togglePassword = () => {
         if (passwordType === 'password') {
             setPasswordType('text');
@@ -43,6 +38,11 @@ const SignUp = () => {
         }
         setPasswordType('password');
     }
+
+    const signInWithGoogle = async () => {
+        const {user} = await signInWithGooglePopup();
+        await createUserDocumentFromAuth(user);
+    };
 
     const handleChange = (event) => {
         const {name, value} = event.target;

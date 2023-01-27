@@ -36,12 +36,7 @@ const SignIn = () => {
         setPasswordType('password');
     }
 
-    const handleChange = (event) => {
-        const {name, value} = event.target;
-
-        setFormFields({...formFields, [name]: value});
-    };
-
+    
     const resetFormFields = () => {
         setFormFields(defaultFormFields);
     }
@@ -53,28 +48,37 @@ const SignIn = () => {
     
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        
         try {
-            const {user} = await signInAuthUserWithEmailAndPassword(
-                email, 
-                password
-            );
-            
-            alert('Login successful!')
-            resetFormFields();
-            navigate('/homepage'); //navigate to homepage if login successful
-        } catch (error) {
-            switch(error.code) {
-                case "auth/wrong-password":
-                    alert("incorrect password for email");
-                    break
-                case "auth/user-not-found":
-                    alert("no user associated with this email");
-                    break;
-                default:
-                    console.log(error);
-            }
-        }
+                const response = await signInAuthUserWithEmailAndPassword(
+                    email, 
+                    password
+                );
+                console.log(response);
+                    
+                alert('Login successful!');
+                    
+                resetFormFields();
+                    
+                navigate('/homepage'); //navigate to homepage if login successful
+            }   catch (error) {
+                    switch(error.code) {
+                        case "auth/wrong-password":
+                            alert("incorrect password for email");
+                            break;
+                        case "auth/user-not-found":
+                            alert("no user associated with this email");
+                            break;
+                        default:
+                            console.log(error);
+                    }
+                }
+    };
+                    
+    const handleChange = (event) => {
+        const {name, value} = event.target;
+
+        setFormFields({...formFields, [name]: value});
     };
 
     return (

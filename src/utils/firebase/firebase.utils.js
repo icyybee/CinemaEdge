@@ -25,6 +25,7 @@ const firebaseConfig = {
     appId: "1:170234766483:web:114b9d3b46e994fcb5d966"
 };
 
+//initialize firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
@@ -42,10 +43,14 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googlePro
 export const db = getFirestore();
 
 //async function that receives user database
-export const createUserDocumentFromAuth = async (userAuth, additionalInfo = {}) => {
+export const createUserDocumentFromAuth = async (
+    userAuth, 
+    additionalInfo = {}
+) => {
     if(!userAuth) return;
     
     const userDocRef = doc(db, "users", userAuth.uid);
+    
     const userSnapshot = await getDoc(userDocRef);
     
     //if the usersnapshot doesn't exist in the firestore database
