@@ -9,16 +9,23 @@
     align-items: center;
     gap: 3rem;
 
+    @media (max-width:$bp-small) {
+        padding: 0rem 3rem;
+    }
+
     & .remember {
         display: flex;
 
+        & input[type=checkbox] {
+            width: 4rem;
+        }
+        
         & input[type=checkbox]:checked {
             accent-color: $color-primary-light;
             color: $color-white;
         }
 
         & label {
-            margin-left: 1rem;
             font-size: 1.2rem;
             color: $color-white;
         }

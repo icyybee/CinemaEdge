@@ -6,6 +6,11 @@
     left: 45%;
     transform: translate(-40%, -50%);
 
+    @media (max-width:$bp-medium) {
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
     .styles_typicalWrapper__1_Uvh::after {
         content: '';
     }
@@ -15,5 +20,9 @@
         text-shadow: 5px 3px 3px $color-shadow;
         font-weight: 600;
         color: $color-primary-dark;
+
+        @media (max-width:$bp-medium) {
+            font-size: 7rem;
+        }
     }
 }
