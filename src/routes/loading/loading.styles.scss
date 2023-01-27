@@ -24,5 +24,9 @@
         @media (max-width:$bp-medium) {
             font-size: 7rem;
         }
+        
+        @media (max-width:$bp-small) {
+            font-size: 5rem;
+        }
     }
 }
