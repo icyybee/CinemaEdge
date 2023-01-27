@@ -43,7 +43,7 @@ const SignUp = () => {
         const {user} = await signInWithGooglePopup();
         await createUserDocumentFromAuth(user);
     };
-
+    
     const handleChange = (event) => {
         const {name, value} = event.target;
 

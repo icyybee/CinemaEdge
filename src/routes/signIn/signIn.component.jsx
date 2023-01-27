@@ -1,31 +1,30 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { 
     signInWithGooglePopup,
     createUserDocumentFromAuth,
-    signInAuthUserWithEmailAndPassword
+    signInAuthUserWithEmailAndPassword 
 } from "../../utils/firebase/firebase.utils";
 
 import Form from "../../components/form/form.component";
 import FormInput from '../../components/formInput/formInput.component';
 
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 
 import './signIn.styles.scss';
 
 const defaultFormFields = {
+    name: '',
     email: '',
     password: ''
 }
 
 const SignIn = () => {
-    const navigate = useNavigate();
-
     const [formFields, setFormFields] = useState(defaultFormFields);
-    const { email, password } = formFields;
+    const { name, email, password } = formFields;
     const [passwordType, setPasswordType] = useState('password');
 
     const togglePassword = () => {
@@ -36,7 +35,12 @@ const SignIn = () => {
         setPasswordType('password');
     }
 
-    
+    const handleChange = (event) => {
+        const {name, value} = event.target;
+
+        setFormFields({...formFields, [name]: value});
+    };
+
     const resetFormFields = () => {
         setFormFields(defaultFormFields);
     }
@@ -48,37 +52,26 @@ const SignIn = () => {
     
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
-        try {
-                const response = await signInAuthUserWithEmailAndPassword(
-                    email, 
-                    password
-                );
-                console.log(response);
-                    
-                alert('Login successful!');
-                    
-                resetFormFields();
-                    
-                navigate('/homepage'); //navigate to homepage if login successful
-            }   catch (error) {
-                    switch(error.code) {
-                        case "auth/wrong-password":
-                            alert("incorrect password for email");
-                            break;
-                        case "auth/user-not-found":
-                            alert("no user associated with this email");
-                            break;
-                        default:
-                            console.log(error);
-                    }
-                }
-    };
-                    
-    const handleChange = (event) => {
-        const {name, value} = event.target;
 
-        setFormFields({...formFields, [name]: value});
+        try {
+            const response = await signInAuthUserWithEmailAndPassword(
+                email, 
+                password
+            );
+        
+            resetFormFields();
+        } catch (error) {
+            switch(error.code) {
+                case "auth/wrong-password":
+                    alert("incorrect password for email");
+                    break
+                case "auth/user-not-found":
+                    alert("no user associated with this email");
+                    break;
+                default:
+                    console.log(error);
+            }
+        }
     };
 
     return (
@@ -90,6 +83,16 @@ const SignIn = () => {
                 google='Sign in with google'
             >
                 <div className='form__inputs'>
+                    <FormInput     
+                        type='name' 
+                        placeholder='Username' 
+                        required
+                        onChange={handleChange} 
+                        name='name' 
+                        value={name}
+                        icon= <PersonRoundedIcon />
+                    />
+
                     <FormInput     
                         type='email' 
                         placeholder='Email' 
