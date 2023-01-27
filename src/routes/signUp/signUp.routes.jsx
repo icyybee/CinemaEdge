@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { 
     signInWithGooglePopup,
@@ -24,6 +25,8 @@ const defaultFormFields = {
 }
 
 const SignUp = () => {
+    const navigate = useNavigate();
+
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { name, email, password, confirmPassword } = formFields;
     const [passwordType, setPasswordType] = useState('password');
@@ -68,6 +71,7 @@ const SignUp = () => {
             await createUserDocumentFromAuth(user, {name});
             alert("Sign up successful!");
             resetFormFields();
+            navigate('/homepage');
 
         } catch (error) {
             if (error.code === "auth/email-already-in-use") {

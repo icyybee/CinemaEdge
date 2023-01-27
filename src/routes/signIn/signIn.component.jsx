@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { 
     signInWithGooglePopup,
@@ -21,6 +22,8 @@ const defaultFormFields = {
 }
 
 const SignIn = () => {
+    const navigate = useNavigate();
+
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
     const [passwordType, setPasswordType] = useState('password');
@@ -59,6 +62,7 @@ const SignIn = () => {
             
             alert('Login successful!')
             resetFormFields();
+            navigate('/homepage'); //navigate to homepage if login successful
         } catch (error) {
             switch(error.code) {
                 case "auth/wrong-password":
