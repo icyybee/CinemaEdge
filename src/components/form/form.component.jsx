@@ -5,7 +5,7 @@ import FormBase from '../formBase/formBase.component';
 
 import './form.styles.scss';
 
-const Form = ({logGoogleUser,text, rest, handleSubmit, children, google}) => {
+const Form = ({logGoogleUser, logGoogleRedirectUser, text, rest, handleSubmit, children, google}) => {
     return (
         <form onSubmit={handleSubmit} className='form'>
             <div className='form__container'>
@@ -14,7 +14,7 @@ const Form = ({logGoogleUser,text, rest, handleSubmit, children, google}) => {
                         <img src={Logo} alt='logo'/>
                     </div>
                     {children}
-                    <BasicButton logGoogleUser={logGoogleUser} text={text} google={google} />
+                    <BasicButton logGoogleRedirectUser={logGoogleRedirectUser} logGoogleUser={logGoogleUser} text={text} google={google} />
                     {rest && (
                         <FormBase />
                     )}
