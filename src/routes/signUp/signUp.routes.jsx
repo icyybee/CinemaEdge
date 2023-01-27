@@ -2,7 +2,8 @@ import { useState } from "react";
 
 import { 
     signInWithGooglePopup,
-    createUserDocumentFromAuth
+    createUserDocumentFromAuth,
+    createAuthUserWithEmailAndPassword
 } from "../../utils/firebase/firebase.utils";
 
 import Form from "../../components/form/form.component";
@@ -46,9 +47,9 @@ const SignUp = () => {
         setFormFields({...formFields, [name]: value});
     };
 
-    // const resetFormFields = () => {
-    //     setFormFields(defaultFormFields);
-    // }
+    const resetFormFields = () => {
+        setFormFields(defaultFormFields);
+    }
     
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -58,22 +59,23 @@ const SignUp = () => {
             return;
         } 
 
-        // try {
-        //     const {user} = await createAuthUserWithEmailAndPassword(
-        //         email, 
-        //         password
-        //     );
+        try {
+            const {user} = await createAuthUserWithEmailAndPassword(
+                email, 
+                password
+            );
             
-        //     await createUserDocumentFromAuth(user, {displayName});
-        //     resetFormFields();
+            await createUserDocumentFromAuth(user, {name});
+            alert("Sign up successful!");
+            resetFormFields();
 
-        // } catch (error) {
-        //     if (error.code === "auth/email-already-in-use") {
-        //         alert("Cannot create user, email already in use");
-        //     } else {
-        //         console.log("user creation encountered an error, error");
-        //     }
-        // }
+        } catch (error) {
+            if (error.code === "auth/email-already-in-use") {
+                alert("Cannot create user, email already in use");
+            } else {
+                console.log("user creation encountered an error, error");
+            }
+        }
     };
     
     return (

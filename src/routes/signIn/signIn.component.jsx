@@ -1,25 +1,33 @@
 import { useState } from "react";
 
+import { 
+    signInWithGooglePopup,
+    createUserDocumentFromAuth,
+} from "../../utils/firebase/firebase.utils";
+
 import Form from "../../components/form/form.component";
 import FormInput from '../../components/formInput/formInput.component';
 
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
-import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 
 import './signIn.styles.scss';
 
 const defaultFormFields = {
-    name: '',
     email: '',
     password: ''
 }
 
 const SignIn = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
-    const { name, email, password } = formFields;
+    const { email, password } = formFields;
     const [passwordType, setPasswordType] = useState('password');
+
+    const logGoogleUser = async () => {
+        const {user} = await signInWithGooglePopup();
+        const userDocRef = await createUserDocumentFromAuth(user);
+    }
 
     const togglePassword = () => {
         if (passwordType === 'password') {
@@ -70,22 +78,12 @@ const SignIn = () => {
     return (
         <div className="signin bg">
             <Form
-                // signInWithGoogle={signInWithGoogle}
+                logGoogleUser={logGoogleUser}
                 handleSubmit={handleSubmit} 
                 text='Login'
                 google='Sign in with google'
             >
                 <div className='form__inputs'>
-                    <FormInput     
-                        type='name' 
-                        placeholder='Username' 
-                        required
-                        onChange={handleChange} 
-                        name='name' 
-                        value={name}
-                        icon= <PersonRoundedIcon />
-                    />
-
                     <FormInput     
                         type='email' 
                         placeholder='Email' 
