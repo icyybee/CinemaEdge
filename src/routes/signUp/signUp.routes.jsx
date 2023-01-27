@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { 
     signInWithGooglePopup,
-    signInWithGoogleRedirect,
     createUserDocumentFromAuth
 } from "../../utils/firebase/firebase.utils";
 
@@ -31,11 +30,6 @@ const SignUp = () => {
     const logGoogleUser = async () => {
         const {user} = await signInWithGooglePopup();
         const userDocRef = await createUserDocumentFromAuth(user);
-    }
-    
-    const logGoogleRedirectUser = async () => {
-        const {user} = await signInWithGoogleRedirect();
-        console.log(user);
     }
 
     const togglePassword = () => {
@@ -86,7 +80,6 @@ const SignUp = () => {
         <div className="signup bg">
             <Form 
                 logGoogleUser={logGoogleUser}
-                logGoogleRedirectUser={logGoogleRedirectUser}
                 handleSubmit={handleSubmit}
                 text='Sign up'
                 google='Sign up with google'
