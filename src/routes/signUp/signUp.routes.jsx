@@ -1,5 +1,10 @@
 import { useState } from "react";
 
+import { 
+    signInWithGooglePopup,
+    createUserDocumentFromAuth
+} from "../../utils/firebase/firebase.utils";
+
 import Form from "../../components/form/form.component";
 import FormInput from '../../components/formInput/formInput.component';
 
@@ -21,6 +26,11 @@ const SignUp = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { name, email, password, confirmPassword } = formFields;
     const [passwordType, setPasswordType] = useState('password');
+
+    const logGoogleUser = async () => {
+        const {user} = await signInWithGooglePopup();
+        const userDocRef = await createUserDocumentFromAuth(user);
+    }
 
     const togglePassword = () => {
         if (passwordType === 'password') {
@@ -69,6 +79,7 @@ const SignUp = () => {
     return (
         <div className="signup bg">
             <Form 
+                logGoogleUser={logGoogleUser}
                 handleSubmit={handleSubmit}
                 text='Sign up'
                 google='Sign up with google'

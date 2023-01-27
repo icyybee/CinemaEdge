@@ -3,7 +3,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 
 import './button.styles.scss';
 
-const BasicButton = ({text, google, signInWithGoogle}) => {
+const BasicButton = ({logGoogleUser, text, google, signInWithGoogle}) => {
     return (
         <div className='form__button'>
             <Button 
@@ -18,7 +18,7 @@ const BasicButton = ({text, google, signInWithGoogle}) => {
                 type='submit' 
                 variant="contained" 
                 className='form__button--google'
-                onClick={signInWithGoogle}
+                onClick={logGoogleUser}
             >
                 <GoogleIcon /> {google}
             </Button>
