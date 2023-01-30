@@ -30,6 +30,7 @@ const SignUp = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { name, email, password, confirmPassword } = formFields;
     const [passwordType, setPasswordType] = useState('password');
+    const [confirmPasswordType, setConfirmPasswordType] = useState('password');
 
     const togglePassword = () => {
         if (passwordType === 'password') {
@@ -38,10 +39,19 @@ const SignUp = () => {
         }
         setPasswordType('password');
     }
+    
+    const toggleConfirmPassword = () => {
+        if (confirmPasswordType === 'password') {
+            setConfirmPasswordType('text');
+            return;
+        }
+        setConfirmPasswordType('password');
+    }
 
     const signInWithGoogle = async () => {
         const {user} = await signInWithGooglePopup();
         await createUserDocumentFromAuth(user);
+        navigate('/homepage');
     };
     
     const handleChange = (event) => {
@@ -127,16 +137,16 @@ const SignUp = () => {
                     />
                     
                     <FormInput 
-                        type={passwordType} 
+                        type={confirmPasswordType} 
                         placeholder='Confirm Password' 
                         required 
                         onChange={handleChange} 
                         name='confirmPassword' 
                         value={confirmPassword}
-                        icon= {passwordType === 'password' ? (
-                            <VisibilityOffRoundedIcon onClick= {togglePassword}/>
+                        icon= {confirmPasswordType === 'password' ? (
+                            <VisibilityOffRoundedIcon onClick= {toggleConfirmPassword}/>
                         ) : (
-                            <VisibilityRoundedIcon onClick={togglePassword} />
+                            <VisibilityRoundedIcon onClick={toggleConfirmPassword} />
                         )}
                     />
                 </div>

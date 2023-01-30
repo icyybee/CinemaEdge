@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { 
     signInWithGooglePopup,
@@ -23,6 +24,8 @@ const defaultFormFields = {
 }
 
 const SignIn = () => {
+    const navigate = useNavigate();
+    
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { name, email, password } = formFields;
     const [passwordType, setPasswordType] = useState('password');
@@ -48,6 +51,7 @@ const SignIn = () => {
     const signInWithGoogle = async () => {
         const {user} = await signInWithGooglePopup();
         await createUserDocumentFromAuth(user);
+        navigate('/homepage');
     };
     
     const handleSubmit = async (event) => {
