@@ -27,7 +27,9 @@
     }
 
     &__head {
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         width: 100%;
 
         & img {
@@ -47,13 +49,13 @@
         }
 
         & button {
-            float: right;
             margin-top: 3rem;
             background-color: $color-primary;
             font-size: 1.5rem;
             font-family: $font-secondary;
             font-weight: bold;
             gap: 3px;
+            align-self: end;
 
             &:hover {
                 background-color: $color-shadow;
