@@ -92,7 +92,7 @@ const ProfilePage = () => {
                                         <AddToPhotosRoundedIcon onClick={() => setModal(true)}/>
                                         {modal && (
                                             <BasicModal modal={modal} setModal={setModal}>
-                                                <input type="file" onChange={handleImageChange} style={{marginBottom: '2rem'}}/>
+                                                <input type="file" onChange={handleImageChange} style={{marginBottom: '2rem', cursor: 'pointer'}}/>
                                                 <input type="text" value={nickname} onChange={e => setNickname(e.target.value)} placeholder="Nickname" />
                                                 <div className='modal__btn'>
                                                     <BasicBtn functions={handleAddProfile} text='Save' />
