@@ -20,7 +20,7 @@
 
         @media (max-width: $bp-small) {
             position: relative;
-            margin: 8rem 5rem;
+            margin: 8rem 3rem;
             left: 0%;
             transform: none;
         }
@@ -69,6 +69,7 @@
         &--box {
             display: flex;
             gap: 5rem;
+            width: 100%;
 
             @media (max-width: $bp-small) {
                 display: grid;
