@@ -10,12 +10,20 @@
         transform: translate(-50%, -50%);
         text-align: center;
         width: 100%;
+
+        @media (max-width: $bp-small) {
+            top: 55%;
+        }
     }
 
     & img {
         width: 50%;
         height: 10rem;
         object-fit: cover;
+
+        @media (max-width: $bp-small) {
+            width: 70%;
+        }
     }
 
     &__text {
