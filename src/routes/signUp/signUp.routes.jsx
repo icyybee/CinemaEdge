@@ -51,7 +51,8 @@ const SignUp = () => {
     const signInWithGoogle = async () => {
         const {user} = await signInWithGooglePopup();
         await createUserDocumentFromAuth(user);
-        navigate('/homepage');
+        alert('Account created successfully!');
+        navigate('/profilepage');
     };
     
     const handleChange = (event) => {
@@ -81,7 +82,7 @@ const SignUp = () => {
             await createUserDocumentFromAuth(user, {name});
             alert("Sign up successful!");
             resetFormFields();
-            navigate('/homepage');
+            navigate('/profilepage');
 
         } catch (error) {
             if (error.code === "auth/email-already-in-use") {

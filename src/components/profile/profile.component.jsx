@@ -2,11 +2,11 @@ import './profile.styles.scss';
 
 const Profile = ({image, nickname}) => {
     return (
-        <div className="profile__body">
-            <div className='profile__body--img'>
+        <div className="profile-body">
+            <div className='profile-body--img'>
                 <img src={image} alt={nickname}/>
             </div>
-            <div className='profile__body--text'>
+            <div className='profile-body--text'>
                 {nickname}
             </div>
         </div>

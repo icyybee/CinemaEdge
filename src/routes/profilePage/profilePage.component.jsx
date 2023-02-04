@@ -8,7 +8,9 @@ import Emo from '../../assets/bg.jpg';
 import Profile from '../../components/profile/profile.component';
 import BasicModal from '../../components/modal/modal.component';
 
-const HomePage = () => {
+import './profilePage.styles.scss';
+
+const ProfilePage = () => {
     // const { id } = useParams();
 
     const [profiles, setProfiles] = useState([]);
@@ -30,18 +32,18 @@ const HomePage = () => {
     };
     
     return (
-        <div className="home">
-            <div className="home__content">
-                <div className="home__head">
-                    <img src={Logo} alt="home--logo" style={{width: '20%'}} />
+        <div className="profile">
+            <div className="profile__content">
+                <div className="profile__head">
+                    <img src={Logo} alt="profile--logo"/>
                     <h2>Who's Watching?</h2>
                 </div>
 
-                <div className="home__body">
-                    <div className='home__body--box'>
+                <div className="profile__body">
+                    <div className='profile__body--box'>
                         {profiles.map((profile, index) => {
                             return (
-                                <div className='home__body--content'>
+                                <div className='profile__body--content'>
                                     <Profile 
                                         key={index} 
                                         image={profile.image} 
@@ -52,7 +54,7 @@ const HomePage = () => {
                         })}
                         
                         {profiles.length < 5 && (
-                            <div className='home__body--content'>
+                            <div className='profile__body--content'>
                                 <AddToPhotosRoundedIcon onClick={() => setModal(true)}/>
                                 {modal && (
                                     <BasicModal modal={modal} setModal={setModal}>
@@ -71,4 +73,4 @@ const HomePage = () => {
     )
 }
 
-export default HomePage;
+export default ProfilePage;
