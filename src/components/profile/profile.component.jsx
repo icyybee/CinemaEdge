@@ -6,9 +6,6 @@ const Profile = ({image, nickname}) => {
             <div className='profile-body--img'>
                 <img src={image} alt={nickname}/>
             </div>
-            <div className='profile-body--text'>
-                {nickname}
-            </div>
         </div>
     )
 }

@@ -1,12 +1,22 @@
 @import '../../index.scss';
 
 .profile-body {
+    position: absolute;
+    inset: 3px;
+    background: $color-bg;
+    border-radius: 10px;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
     &--img {
 
         & img {
-            width: 10rem;
+            width: 13rem;
             height: 10rem;
-            border-radius: 50%;
+            border-radius: 6px;
             object-fit: cover;
         }
     }
