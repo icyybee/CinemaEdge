@@ -1,14 +1,20 @@
 // COLOR VARIABLES
-$color-primary: #e1b131;
-$color-primary-dark: #f5bd02;
-$color-primary-light: #e1b13140;
+$color-primary: #6052ff; //dark shade
+$color-primary-dark: #6052fb; //btn color
+$color-primary-light: #6656ff; //light shade
+
+$color-bg: #040210;
 
 $color-black: #000000;
 $color-black-light: #00000075;
 
-$color-shadow: #fbe59a47;
+$color-shadow: #07041f;
 
 $color-white: #ffffff;
+
+// FONTS
+$font-primary: 'Montserrat', sans-serif;
+$font-secondary: 'Times New Roman', Times, serif;
 
 // RESPONSIVE BREAKPOINTS
 $bp-largest: 75em;   // 1200px
@@ -36,13 +42,20 @@ html {
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
-  background: $color-black;
+  font-family: $font-primary;
+  background: $color-bg;
   color: $color-white;
   font-weight: 300;
   line-height: 1.5;
 }
 
 .bg {
-  background-image: url(./assets/bg.jpg);
+  background-image: linear-gradient(
+    to right bottom,
+    rgba($color-shadow, 0.8),
+    rgba($color-bg, 0.8)),
+    url(./assets/bg-2.jpeg)
+  ;
+  background-size: cover;
+  position: relative;
 }

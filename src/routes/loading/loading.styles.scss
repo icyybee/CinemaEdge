@@ -17,12 +17,15 @@
 
     & h1 {
         font-size: 10rem;
-        text-shadow: 5px 3px 3px $color-shadow;
+        text-shadow: 0px 0px 3px $color-primary-light;
         font-weight: 600;
-        color: $color-primary-dark;
+        background-image: linear-gradient(to left, $color-primary-light, $color-primary-dark);
+        -webkit-background-clip: text;
+        color: transparent;
 
         @media (max-width:$bp-medium) {
             font-size: 7rem;
+            text-shadow: 2px 2px 6px $color-primary-light;
         }
         
         @media (max-width:$bp-small) {

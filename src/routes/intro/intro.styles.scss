@@ -1,0 +1,52 @@
+@import '../../index.scss';
+
+.intro {
+    height: 100vh;
+
+    &__container {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 100%;
+    }
+
+    & img {
+        width: 50%;
+        height: 10rem;
+        object-fit: cover;
+    }
+
+    &__text {
+        font-weight: 700;
+        text-transform: uppercase;
+        font-family: $font-secondary;
+        margin-top: 2rem;
+        
+        & h2 {
+            font-size: 4rem;
+        }
+
+        & h3 {
+            font-size: 2rem;
+            margin-top: 2rem;
+        }
+    }
+
+    &__foot {
+        margin-top: 5rem;
+
+        & button {
+            background-color: $color-primary;
+            width: 40%;
+            font-size: 1.8rem;
+            font-weight: bold;
+            font-family: $font-secondary;
+
+            &:hover {
+                background-color: $color-shadow;
+            }
+        }
+    }
+}

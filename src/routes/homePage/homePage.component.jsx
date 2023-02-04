@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import AddToPhotosRoundedIcon from '@mui/icons-material/AddToPhotosRounded';
 
 import Logo from '../../assets/logo-full.png';
-import Emo from '../../assets/bground.jpg';
+import Emo from '../../assets/bg.jpg';
 import Profile from '../../components/profile/profile.component';
 import BasicModal from '../../components/modal/modal.component';
 

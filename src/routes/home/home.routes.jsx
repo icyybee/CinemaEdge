@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import Loading from "../loading/loading.routes";
-import SignUp from "../signUp/signUp.routes";
+import Intro from "../intro/intro.routes";
 
 const Home = () => {
     const [isLoading, setLoading] = useState(true);
@@ -26,7 +26,7 @@ const Home = () => {
     return (
         <>
             {isLoaded ? (
-                <SignUp />
+                <Intro />
                 ) : (
                     <div style={{ color: "red" }}>Something went wrong</div>
                 )
