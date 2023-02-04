@@ -1,9 +1,9 @@
 import Button from '@mui/material/Button';
 
-const BasicBtn = ({text, icon}) => {
+const BasicBtn = ({text, icon, functions}) => {
   return (
-        <Button variant="contained">{icon}{text}</Button>
-    );
+      <Button onClick={functions} variant="contained">{icon}{text}</Button>
+  );
 }
 
 export default BasicBtn;

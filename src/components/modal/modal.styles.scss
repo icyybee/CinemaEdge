@@ -1,0 +1,46 @@
+@import '../../index.scss';
+
+.modal {
+
+    &__btn {
+        margin-top: 3rem;
+        gap: 3rem;
+        display: flex;
+        justify-content: center;
+        font-size: 1.8rem;
+        font-weight: bold;
+        font-family: $font-secondary;
+        
+        & button {
+            background-color: $color-primary;
+            
+            &:hover {
+                background-color: $color-shadow;
+            }
+        }
+
+    }
+
+    & input {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid $color-primary-light;
+        box-shadow: 0px 0px 0px $color-primary-light;
+        background-color: $color-black-light;
+        border-radius: 5px;
+        padding: 1rem;
+        display: block;
+        color: $color-primary;
+    
+        &:focus {
+            outline: none;
+        }
+    
+        &::-webkit-input-placeholder {
+            font-weight: 500;
+            font-size: 1.5rem;
+            font-family: inherit;
+            color: $color-white;
+        }
+    }
+}

@@ -92,10 +92,12 @@ const ProfilePage = () => {
                                         <AddToPhotosRoundedIcon onClick={() => setModal(true)}/>
                                         {modal && (
                                             <BasicModal modal={modal} setModal={setModal}>
-                                                <input type="file" onChange={handleImageChange} />
+                                                <input type="file" onChange={handleImageChange} style={{marginBottom: '2rem'}}/>
                                                 <input type="text" value={nickname} onChange={e => setNickname(e.target.value)} placeholder="Nickname" />
-                                                <button onClick={handleAddProfile}>Save</button>
-                                                <button onClick={() => setModal(false)}>Cancel</button>
+                                                <div className='modal__btn'>
+                                                    <BasicBtn functions={handleAddProfile} text='Save' />
+                                                    <BasicBtn functions={() => setModal(false)} text='Cancel' />
+                                                </div>
                                             </BasicModal>
                                         )}
                                     </div>
