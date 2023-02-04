@@ -7,10 +7,11 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: 'red',
-  border: '2px solid #000',
+  bgcolor: '#07041fcc',
+  border: '1px solid #6052ff',
   boxShadow: 24,
   p: 4,
+  borderRadius: 2.5
 };
 
 const BasicModal = ({children, modal, setModal}) => {
