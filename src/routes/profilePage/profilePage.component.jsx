@@ -43,7 +43,7 @@ const ProfilePage = () => {
     const [modal, setModal] = useState(false);
     const [titleChange, setTitleChange] = useState(title);
     const [buttonChange, setButtonChange] = useState('Edit');
-    const [animation, setAnimation] = useState(Slide);
+    const [animation, setAnimation] = useState(false);
 
     const handleAddProfile = () => {
         if (profiles.length < 5) {
@@ -61,7 +61,7 @@ const ProfilePage = () => {
     const handleEditProfile = () => {
         setTitleChange('Edit Profile');
         setButtonChange('Done');
-        setAnimation(Pulse);
+        setAnimation(!animation);
         // navigate('/editprofile');
     }
 
@@ -83,49 +83,51 @@ const ProfilePage = () => {
                 </div>
 
                 <div className="profile__body">
-                    <animation>
-                        <div className='profile__body--box'>
-                            {profiles.map((profile, index) => {
-                                return (
-                                    <Link to='/homepage' style={{textDecoration: 'none', color: 'inherit'}}>
-                                        <div className='profile__body--container'>
-                                            <div className='profile__body--content'>
-                                                <Profile 
-                                                    key={index} 
-                                                    image={profile.image} 
-                                                /> 
-                                            </div>
-                                            <div className='profile__body--text'>
-                                                {profile.nickname.length > 10 ? (
-                                                    profile.nickname.substr(0, 10) + '...'
-                                                ) : (
-                                                    profile.nickname
-                                                )}
-                                            </div>
-                                        </div>
-                                    </Link>
-                                )
-                            })}
-                            
-                            {profiles.length < 5 && (
-                                <div className='profile__body--content'>
-                                    <div className='profile-body'>
-                                        <AddToPhotosRoundedIcon onClick={() => setModal(true)}/>
-                                        {modal && (
-                                            <BasicModal modal={modal} setModal={setModal}>
-                                                <input type="file" onChange={handleImageChange} style={{marginBottom: '2rem', cursor: 'pointer'}}/>
-                                                <input type="text" value={nickname} onChange={e => setNickname(e.target.value)} placeholder="Nickname" />
-                                                <div className='modal__btn'>
-                                                    <BasicBtn functions={handleAddProfile} text='Save' />
-                                                    <BasicBtn functions={() => setModal(false)} text='Cancel' />
+                    <Slide>
+                        <Pulse>
+                            <div className='profile__body--box'>
+                                {profiles.map((profile, index) => {
+                                    return (
+                                        <Link to='/homepage' style={{textDecoration: 'none', color: 'inherit'}}>
+                                            <div className='profile__body--container'>
+                                                <div className='profile__body--content'>
+                                                    <Profile 
+                                                        key={index} 
+                                                        image={profile.image} 
+                                                    /> 
                                                 </div>
-                                            </BasicModal>
-                                        )}
+                                                <div className='profile__body--text'>
+                                                    {profile.nickname.length > 10 ? (
+                                                        profile.nickname.substr(0, 10) + '...'
+                                                    ) : (
+                                                        profile.nickname
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    )
+                                })}
+                                
+                                {profiles.length < 5 && (
+                                    <div className='profile__body--content'>
+                                        <div className='profile-body'>
+                                            <AddToPhotosRoundedIcon onClick={() => setModal(true)}/>
+                                            {modal && (
+                                                <BasicModal modal={modal} setModal={setModal}>
+                                                    <input type="file" onChange={handleImageChange} style={{marginBottom: '2rem', cursor: 'pointer'}}/>
+                                                    <input type="text" value={nickname} onChange={e => setNickname(e.target.value)} placeholder="Nickname" />
+                                                    <div className='modal__btn'>
+                                                        <BasicBtn functions={handleAddProfile} text='Save' />
+                                                        <BasicBtn functions={() => setModal(false)} text='Cancel' />
+                                                    </div>
+                                                </BasicModal>
+                                            )}
+                                        </div>
                                     </div>
-                                </div>
-                            )}
-                        </div>
-                    </animation>
+                                )}
+                            </div>
+                        </Pulse>
+                    </Slide>
                 </div>
             </div>
         </div>
