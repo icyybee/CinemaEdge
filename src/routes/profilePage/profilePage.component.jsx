@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 import AddToPhotosRoundedIcon from '@mui/icons-material/AddToPhotosRounded';
 import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
 
 import styled, {keyframes} from "styled-components";
-import { zoomIn, slideInUp, fadeInUp } from "react-animations";
+import { zoomIn, slideInUp, fadeInUp, pulse } from "react-animations";
 
 import Logo from '../../assets/logo-full.png';
 import Emo from '../../assets/bg.jpg';
@@ -27,14 +27,24 @@ const Slide = styled.div`
     animation: 5s ${keyframes `${slideInUp}`};
 ` 
 
+const Pulse = styled.div`
+    animation: 2s ${keyframes `${pulse}`} infinite;
+`
+
 const ProfilePage = () => {
     // const { id } = useParams();
+    const navigate = useNavigate();
+    
+    const title = 'Who\'s Watching?';
 
     const [profiles, setProfiles] = useState([]);
     const [image, setImage] = useState(Emo);
     const [nickname, setNickname] = useState('');
     const [modal, setModal] = useState(false);
-    
+    const [titleChange, setTitleChange] = useState(title);
+    const [buttonChange, setButtonChange] = useState('Edit');
+    const [animation, setAnimation] = useState(Slide);
+
     const handleAddProfile = () => {
         if (profiles.length < 5) {
           setProfiles([...profiles, { image, nickname }]);
@@ -43,6 +53,17 @@ const ProfilePage = () => {
           setModal(false);
         }
     };
+
+    const handleDeleteProfile = () => {
+
+    }
+    
+    const handleEditProfile = () => {
+        setTitleChange('Edit Profile');
+        setButtonChange('Done');
+        setAnimation(Pulse);
+        // navigate('/editprofile');
+    }
 
     const handleImageChange = (event) => {
         setImage(URL.createObjectURL(event.target.files[0]));
@@ -56,13 +77,13 @@ const ProfilePage = () => {
                         <img src={Logo} alt="profile--logo"/>
                     </Zoom>
                     <Fade>
-                        <h2>Who's Watching?</h2>
+                        <h2>{titleChange}</h2>
                     </Fade>
-                    <BasicBtn icon= <OpenInNewRoundedIcon /> text='Edit' />
+                    <BasicBtn icon= <OpenInNewRoundedIcon /> text={buttonChange} functions={handleEditProfile} />
                 </div>
 
                 <div className="profile__body">
-                    <Slide>
+                    <animation>
                         <div className='profile__body--box'>
                             {profiles.map((profile, index) => {
                                 return (
@@ -104,7 +125,7 @@ const ProfilePage = () => {
                                 </div>
                             )}
                         </div>
-                    </Slide>
+                    </animation>
                 </div>
             </div>
         </div>
