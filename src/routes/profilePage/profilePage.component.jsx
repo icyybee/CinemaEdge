@@ -160,6 +160,3 @@ const ProfilePage = () => {
 }
 
 export default ProfilePage;
-
-// <Link key={index} style={{textDecoration: 'none', color: 'inherit'}}></Link>
-//                                     </Link>
