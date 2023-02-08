@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import AddToPhotosRoundedIcon from '@mui/icons-material/AddToPhotosRounded';
 import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
 
 import styled, {keyframes} from "styled-components";
-import { zoomIn, slideInUp, fadeInUp, pulse } from "react-animations";
+import { zoomIn, slideInUp, fadeInUp } from "react-animations";
 
 import Logo from '../../assets/logo-full.png';
 import Emo from '../../assets/bg.jpg';
@@ -24,19 +24,15 @@ const Fade = styled.div`
 ` 
 
 const Slide = styled.div`
-    animation: 5s ${keyframes `${slideInUp}`};
+    animation: 3s ${keyframes `${slideInUp}`};
 ` 
 
-const Pulse = styled.div`
-    animation: 2s ${keyframes `${pulse}`} infinite;
-`
-
 const ProfilePage = () => {
-    // const { id } = useParams();
     const navigate = useNavigate();
     
     const title = 'Who\'s Watching?';
 
+    const [initialState, setInitialState] = useState({});
     const [profiles, setProfiles] = useState([]);
     const [image, setImage] = useState(Emo);
     const [nickname, setNickname] = useState('');
@@ -57,14 +53,44 @@ const ProfilePage = () => {
     const handleDeleteProfile = () => {
 
     }
-    
-    const handleEditProfile = () => {
-        setTitleChange('Edit Profile');
-        setButtonChange('Done');
-        setAnimation(!animation);
-        // navigate('/editprofile');
+
+    const handleEdit = (index) => {
+        navigate(`/editprofile/${index}`);
     }
 
+    const handleHome = (index) => {
+        navigate(`/homepage/${index}`);
+    }
+
+    const handleRoute = (index) => {
+        if (buttonChange === 'Done') {
+            handleEdit(index);
+        } else {
+            handleHome(index);
+        }
+    }
+    
+    const handleEditProfile = () => {
+        if (Object.keys(initialState).length === 0) {
+            // store the initial state of the profile
+            setInitialState({
+                image,
+                nickname
+            });
+            setTitleChange('Edit Profile');
+            setButtonChange('Done');
+            setAnimation(animate => !animate);
+        } else {
+            // reset the state of the profile to the initial state
+            setImage(initialState.image);
+            setNickname(initialState.nickname);
+            setTitleChange(title);
+            setButtonChange('Edit');
+            setAnimation(animate => !animate);
+            setInitialState({});
+        }
+    }
+    
     const handleImageChange = (event) => {
         setImage(URL.createObjectURL(event.target.files[0]));
     };
@@ -84,49 +110,48 @@ const ProfilePage = () => {
 
                 <div className="profile__body">
                     <Slide>
-                        <Pulse>
-                            <div className='profile__body--box'>
-                                {profiles.map((profile, index) => {
-                                    return (
-                                        <Link to='/homepage' style={{textDecoration: 'none', color: 'inherit'}}>
-                                            <div className='profile__body--container'>
-                                                <div className='profile__body--content'>
-                                                    <Profile 
-                                                        key={index} 
-                                                        image={profile.image} 
-                                                    /> 
-                                                </div>
-                                                <div className='profile__body--text'>
-                                                    {profile.nickname.length > 10 ? (
-                                                        profile.nickname.substr(0, 10) + '...'
-                                                    ) : (
-                                                        profile.nickname
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    )
-                                })}
-                                
-                                {profiles.length < 5 && (
-                                    <div className='profile__body--content'>
-                                        <div className='profile-body'>
-                                            <AddToPhotosRoundedIcon onClick={() => setModal(true)}/>
-                                            {modal && (
-                                                <BasicModal modal={modal} setModal={setModal}>
-                                                    <input type="file" onChange={handleImageChange} style={{marginBottom: '2rem', cursor: 'pointer'}}/>
-                                                    <input type="text" value={nickname} onChange={e => setNickname(e.target.value)} placeholder="Nickname" />
-                                                    <div className='modal__btn'>
-                                                        <BasicBtn functions={handleAddProfile} text='Save' />
-                                                        <BasicBtn functions={() => setModal(false)} text='Cancel' />
-                                                    </div>
-                                                </BasicModal>
+                        <div className={animation ? 'profile__body--box-animate' : 'profile__body--box'}>
+                            {profiles.map((profile, index) => {
+                                return (           
+                                    <div 
+                                        className='profile__body--container' 
+                                        onClick={() => handleRoute(index)}
+                                    >
+                                        <div className='profile__body--content'>
+                                            <Profile 
+                                                key={index} 
+                                                image={profile.image} 
+                                            /> 
+                                        </div>
+                                        <div className='profile__body--text'>
+                                            {profile.nickname.length > 10 ? (
+                                                profile.nickname.substr(0, 10) + '...'
+                                            ) : (
+                                                profile.nickname
                                             )}
                                         </div>
                                     </div>
-                                )}
-                            </div>
-                        </Pulse>
+                                )
+                            })}
+                            
+                            {profiles.length < 5 && (
+                                <div className='profile__body--content'>
+                                    <div className='profile-body'>
+                                        <AddToPhotosRoundedIcon onClick={() => setModal(true)}/>
+                                        {modal && (
+                                            <BasicModal modal={modal} setModal={setModal}>
+                                                <input type="file" onChange={handleImageChange} style={{marginBottom: '2rem', cursor: 'pointer'}}/>
+                                                <input type="text" value={nickname} onChange={e => setNickname(e.target.value)} placeholder="Nickname" />
+                                                <div className='modal__btn'>
+                                                    <BasicBtn functions={handleAddProfile} text='Save' />
+                                                    <BasicBtn functions={() => setModal(false)} text='Cancel' />
+                                                </div>
+                                            </BasicModal>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </Slide>
                 </div>
             </div>
@@ -135,3 +160,6 @@ const ProfilePage = () => {
 }
 
 export default ProfilePage;
+
+// <Link key={index} style={{textDecoration: 'none', color: 'inherit'}}></Link>
+//                                     </Link>

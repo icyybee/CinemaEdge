@@ -71,6 +71,36 @@
             gap: 5rem;
             width: 100%;
 
+            @media (max-width: $bp-largest) {
+                gap: 3rem;
+            }
+
+            @media (max-width: $bp-large) {
+                gap: 5rem;
+            }
+
+            @media (max-width: $bp-small) {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                justify-items: center;
+            }
+        }
+
+        &--box-animate {
+            overflow: hidden;
+            display: flex;
+            gap: 5rem;
+            width: 100%;
+            animation: 2s pulse infinite;
+            
+            @media (max-width: $bp-largest) {
+                gap: 3rem;
+            }
+
+            @media (max-width: $bp-large) {
+                gap: 5rem;
+            }
+            
             @media (max-width: $bp-small) {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
@@ -139,3 +169,17 @@
 		transform: rotate(360deg);
 	}
 }
+
+@keyframes pulse {
+    0% { 
+        transform: scale(1); 
+    }
+    
+    50% { 
+        transform: scale(1.1); 
+    }
+    
+    100% { 
+        transform: scale(1); 
+    } 
+} 

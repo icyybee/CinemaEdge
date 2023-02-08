@@ -36,7 +36,7 @@ html {
   font-size: 62.5%; 
   scroll-behavior: smooth;
 
-  @media (max-width: $bp-medium) {
+  @media (max-width: $bp-large) {
     font-size: 50%;
   }
 }
