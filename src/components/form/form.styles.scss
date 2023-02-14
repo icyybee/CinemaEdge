@@ -36,11 +36,10 @@
             }
 
             & img {
-                width: 20%;
-
-                @media (max-width:$bp-small) {
-                    width: 30%;
-                }
+                width: 200px;
+                height: 100px;
+                object-fit: cover;
+                margin-top: 2rem;
             }
         }
     }

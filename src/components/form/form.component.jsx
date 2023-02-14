@@ -1,4 +1,4 @@
-import Logo from '../../assets/logo.png';
+import Logo from '../../assets/logo-full.png';
 
 import BasicButton from '../button/button.component';
 import FormBase from '../formBase/formBase.component';
