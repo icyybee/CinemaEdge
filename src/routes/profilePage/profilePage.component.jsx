@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/auth.context';
+import { collection, setDoc, doc, getDocs } from 'firebase/firestore';
+import { db } from '../../utils/firebase/firebase.utils';
 
 import AddToPhotosRoundedIcon from '@mui/icons-material/AddToPhotosRounded';
 import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
@@ -28,6 +31,7 @@ const Slide = styled.div`
 ` 
 
 const ProfilePage = () => {
+    const { userAuth, userDocRef } = useContext(UserContext) || {};
     const navigate = useNavigate();
     
     const title = 'Who\'s Watching?';
@@ -41,32 +45,58 @@ const ProfilePage = () => {
     const [buttonChange, setButtonChange] = useState('Edit');
     const [animation, setAnimation] = useState(false);
 
-    const handleAddProfile = () => {
-        if (profiles.length < 5) {
-          setProfiles([...profiles, { image, nickname }]);
-          setImage(Emo);
-          setNickname('');
-          setModal(false);
+    useEffect(() => {
+        const fetchProfiles = async () => {
+          if (!userDocRef) return;
+          const profilesCollectionRef = collection(userDocRef, 'profiles');
+          const profilesSnapshot = await getDocs(profilesCollectionRef);
+          const profilesData = profilesSnapshot.docs.map((doc) => doc.data());
+          setProfiles(profilesData);
+        };
+    
+        fetchProfiles();
+    }, [userDocRef]);
+       
+
+    const handleAddProfile = async () => {
+        try {
+          if (profiles.length < 5 && userDocRef) {
+            const userCollectionRef = collection(db, 'users');
+            const userDocRef = doc(userCollectionRef, userAuth.uid);
+      
+            const profilesCollectionRef = collection(userDocRef, 'profiles');
+            const profileDocRef = doc(profilesCollectionRef, nickname);
+      
+            await setDoc(profileDocRef, { image, nickname });
+            setProfiles([...profiles, { image, nickname }]);
+            setImage(Emo);
+            setNickname('');
+            setModal(false);
+          } else {
+            console.log('Cannot create more than 5 profiles');
+          }
+        } catch (error) {
+          console.error(error);
         }
     };
-
+      
     const handleDeleteProfile = () => {
 
     }
 
-    const handleEdit = (index) => {
-        navigate(`/editprofile/${index}`);
+    const handleEdit = (index, image, nickname) => {
+        navigate(`/editprofile/${index}`, { state: { profile: {index, image, nickname} } });
+    };
+            
+    const handleHome = (index, image, nickname) => {
+        navigate(`/homepage/${index}`, { state: { profile: {index, image, nickname} } });
     }
 
-    const handleHome = (index) => {
-        navigate(`/homepage/${index}`);
-    }
-
-    const handleRoute = (index) => {
+    const handleRoute = (index, image, nickname) => {
         if (buttonChange === 'Done') {
-            handleEdit(index);
+            handleEdit(index, image, nickname);
         } else {
-            handleHome(index);
+            handleHome(index, image, nickname);
         }
     }
     
@@ -115,11 +145,11 @@ const ProfilePage = () => {
                                 return (           
                                     <div 
                                         className='profile__body--container' 
-                                        onClick={() => handleRoute(index)}
+                                        onClick={() => handleRoute(index, profile.image, profile.nickname)}
                                     >
                                         <div className='profile__body--content'>
                                             <Profile 
-                                                key={index} 
+                                                key={profile.nickname} 
                                                 image={profile.image} 
                                             /> 
                                         </div>

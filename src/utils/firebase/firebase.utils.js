@@ -12,6 +12,7 @@ import {
 import {
     getFirestore,
     doc,
+    collection,
     getDoc,
     setDoc,
 } from "firebase/firestore";
@@ -55,16 +56,21 @@ export const createUserDocumentFromAuth = async (
     
     //if the usersnapshot doesn't exist in the firestore database
     if(!userSnapshot.exists()) {  
-        const {name, email} = userAuth;
+        const {displayName, email} = userAuth;
         const createdAt = new Date();
 
         try {
+            // create user document
             await setDoc(userDocRef, {
-                name,
+                displayName,
                 email,
                 createdAt,
                 ...additionalInfo
             });
+
+            // create profiles subcollection
+            const profilesCollectionRef = collection(db, `users/${userAuth.uid}/profiles`);
+            const profileDocRef = doc(profilesCollectionRef);
         } catch (error) {
             console.log("error creating the user", error.message);
         }
