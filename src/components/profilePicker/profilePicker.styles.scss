@@ -15,8 +15,17 @@
     grid-template-columns: repeat(5, 1fr);
     gap: 5rem;
 
-    @media (max-width: $bp-small) {
+    @media (max-width: $bp-large) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    @media (max-width: $bp-medium) {
         grid-template-columns: repeat(3, 1fr);
+    }
+    
+    @media (max-width: $bp-small) {
+        padding: 2rem;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     &--img {
