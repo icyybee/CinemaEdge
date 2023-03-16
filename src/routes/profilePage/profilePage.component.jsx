@@ -179,7 +179,7 @@ const ProfilePage = () => {
                                                     <div className='modal__input' value={image} onClick={() => setOpenPicker(true)}>Select Profile Picture</div>
                                                 )}
                                                 <input type="text" value={nickname} onChange={e => setNickname(e.target.value)} placeholder="Nickname" />
-                                                <ProfilePicker open={openPicker} handleImageChange={handleImageChange} setOpen={setOpenPicker} />
+                                                <ProfilePicker open={openPicker} handleImageChange={handleImageChange} setOpen={setOpenPicker} setNickname={setNickname} />
                                                 <div className='modal__btn'>
                                                     <BasicBtn functions={handleAddProfile} text='Save' />
                                                     <BasicBtn functions={() => setModal(false)} text='Cancel' />
