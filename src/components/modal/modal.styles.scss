@@ -23,7 +23,8 @@
 
     }
 
-    & input {
+    & input,
+    &__input {
         width: 100%;
         border: none;
         border-bottom: 1px solid $color-primary-light;
@@ -32,8 +33,11 @@
         border-radius: 5px;
         padding: 1rem;
         display: block;
-        color: $color-primary;
-    
+        font-weight: 500;
+        font-size: 1.5rem;
+        font-family: inherit;
+        color: $color-white;
+        
         &:focus {
             outline: none;
         }
@@ -44,5 +48,20 @@
             font-family: inherit;
             color: $color-white;
         }
+    }
+    
+    &__img {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1rem;
+
+        & img {
+            width: 8rem;
+            height: 8rem;
+            border-radius: 50%;
+        }
+    }
+    &__input {
+        cursor: pointer;
     }
 }

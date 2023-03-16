@@ -1,0 +1,48 @@
+@import '../../index.scss';
+
+.MuiDrawer-root {
+    z-index: 9999 !important;
+}
+
+.MuiDrawer-paper {
+    background: $color-shadow !important;
+}
+
+.prof__pic {
+    padding: 5rem;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5rem;
+
+    @media (max-width: $bp-small) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    &--img {
+        width: 146px;
+        height: 149px;
+
+        & img {
+            width: 100%;
+            border-radius: 30%;
+            height: 100%;
+            cursor: pointer;
+            transition: all .2s ease;
+
+            &:hover {
+                transform: scale(1.2);
+            }
+        }
+    }
+
+    &--svg {
+        cursor: pointer;
+
+        & svg {
+            width: 5rem;
+            height: 5rem;
+            fill: azure;
+        }
+    }
+}

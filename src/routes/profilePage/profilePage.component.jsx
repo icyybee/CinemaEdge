@@ -11,11 +11,10 @@ import styled, {keyframes} from "styled-components";
 import { zoomIn, slideInUp, fadeInUp } from "react-animations";
 
 import Logo from '../../assets/logo-full.png';
-import Emo from '../../assets/bg.jpg';
 import Profile from '../../components/profile/profile.component';
 import BasicModal from '../../components/modal/modal.component';
 import BasicBtn from '../../components/basicBtn/basicBtn.component';
-
+import ProfilePicker from '../../components/profilePicker/profilePicker.component';
 import './profilePage.styles.scss';
 
 const Zoom = styled.div`
@@ -38,8 +37,9 @@ const ProfilePage = () => {
 
     const [initialState, setInitialState] = useState({});
     const [profiles, setProfiles] = useState([]);
-    const [image, setImage] = useState(Emo);
+    const [image, setImage] = useState('');
     const [nickname, setNickname] = useState('');
+    const [openPicker, setOpenPicker] = useState(false);
     const [modal, setModal] = useState(false);
     const [titleChange, setTitleChange] = useState(title);
     const [buttonChange, setButtonChange] = useState('Edit');
@@ -69,7 +69,7 @@ const ProfilePage = () => {
       
             await setDoc(profileDocRef, { image, nickname });
             setProfiles([...profiles, { image, nickname }]);
-            setImage(Emo);
+            setImage();
             setNickname('');
             setModal(false);
           } else {
@@ -121,10 +121,11 @@ const ProfilePage = () => {
         }
     }
     
-    const handleImageChange = (event) => {
-        setImage(URL.createObjectURL(event.target.files[0]));
-    };
-    
+    const handleImageChange = (selectedImage) => {
+        setImage(selectedImage);
+        setOpenPicker(false);
+    };      
+              
     return (
         <div className="profile">
             <div className="profile__content">
@@ -170,8 +171,15 @@ const ProfilePage = () => {
                                         <AddToPhotosRoundedIcon onClick={() => setModal(true)}/>
                                         {modal && (
                                             <BasicModal modal={modal} setModal={setModal}>
-                                                <input type="file" onChange={handleImageChange} style={{marginBottom: '2rem', cursor: 'pointer'}}/>
+                                                {image ? (
+                                                    <div className='modal__img'>
+                                                        <img src={image} />
+                                                    </div>
+                                                ): (
+                                                    <div className='modal__input' value={image} onClick={() => setOpenPicker(true)}>Select Profile Picture</div>
+                                                )}
                                                 <input type="text" value={nickname} onChange={e => setNickname(e.target.value)} placeholder="Nickname" />
+                                                <ProfilePicker open={openPicker} handleImageChange={handleImageChange} setOpen={setOpenPicker} />
                                                 <div className='modal__btn'>
                                                     <BasicBtn functions={handleAddProfile} text='Save' />
                                                     <BasicBtn functions={() => setModal(false)} text='Cancel' />
