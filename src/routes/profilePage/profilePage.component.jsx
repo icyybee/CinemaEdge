@@ -78,16 +78,20 @@ const ProfilePage = () => {
         } catch (error) {
           console.error(error);
         }
-    };
-      
+    };       
+            
     const handleDeleteProfile = () => {
 
     }
 
     const handleEdit = (index, image, nickname) => {
-        navigate(`/editprofile/${index}`, { state: { profile: {index, image, nickname} } });
+        navigate(`/editprofile/${index}`, {
+            state: {
+                profile: { index, image, nickname }
+            },
+        });
     };
-            
+             
     const handleHome = (index, image, nickname) => {
         navigate(`/homepage/${index}`, { state: { profile: {index, image, nickname} } });
     }
@@ -179,7 +183,7 @@ const ProfilePage = () => {
                                                     <div className='modal__input' value={image} onClick={() => setOpenPicker(true)}>Select Profile Picture</div>
                                                 )}
                                                 <input type="text" value={nickname} onChange={e => setNickname(e.target.value)} placeholder="Nickname" />
-                                                <ProfilePicker open={openPicker} handleImageChange={handleImageChange} setOpen={setOpenPicker} setNickname={setNickname} />
+                                                <ProfilePicker open={openPicker} handleImageChange={handleImageChange} setOpen={setOpenPicker} />
                                                 <div className='modal__btn'>
                                                     <BasicBtn functions={handleAddProfile} text='Save' />
                                                     <BasicBtn functions={() => setModal(false)} text='Cancel' />
