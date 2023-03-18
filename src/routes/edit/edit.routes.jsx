@@ -40,39 +40,39 @@ const Edit = () => {
         setOpen(false);
     };
 
-    // const handleUpdateProfile = async () => {
-    //     try {
-    //       // get userDocRef and profileDocRef using the index passed through the URL
-    //       const userCollectionRef = collection(db, 'users');
-    //       const userDocRef = doc(userCollectionRef, userAuth.uid);
+    const updateProfile = async (e) => {
+        e.preventDefault();
+        try {
+          // Update Firestore document for the profile
+          const userCollectionRef = collection(db, 'users');
+          const userDocRef = doc(userCollectionRef, userAuth.uid);
+          const profileDocRef = doc(collection(userDocRef, 'profiles'), profile.nickname);
+      
+          await updateDoc(profileDocRef, {
+            image: newImage,
+            nickname: newNickname,
+          });
+      
+          // Navigate back to ProfilePage with new data
+          navigate(-1, {
+            state: {
+              profileIndex: profile.index,
+              newImage,
+              newNickname,
+            },
+          });
+        } catch (error) {
+          console.error(error);
+        }
+    };
           
-    //       const profilesCollectionRef = collection(userDocRef, 'profiles');
-    //       const profileDocRef = doc(profilesCollectionRef, nickname);
-      
-    //       // update the profile document with the new nickname and image
-    //       await updateDoc(profileDocRef, {
-    //         image: newImage,
-    //         nickname: newNickname
-    //       });
-      
-    //       // update the profiles state in the ProfilePage component
-    //       handleUpdateProfileState({ index: parseInt(index), nickname: newNickname, image: newImage });
-      
-    //       // navigate back to the profile page
-    //       navigate('/profilepage');
-    //     } catch (error) {
-    //       console.error(error);
-    //     }
-    // }
-      
-
     return (
         <div className="edit" key={index}>
             <div className='edit__head'>
                 <h2>Edit Profile</h2>
                 <h3>Select what you want to change</h3>
             </div>
-            <form>
+            <form onSubmit={updateProfile}>
                 <div className='edit__body'>
                     <div className='edit__img'>
                         <img src={newImage} alt='' />

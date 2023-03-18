@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/auth.context';
-import { collection, setDoc, doc, getDocs } from 'firebase/firestore';
+import { collection, setDoc, doc, updateDoc, onSnapshot } from 'firebase/firestore';
 import { db } from '../../utils/firebase/firebase.utils';
 
 import AddToPhotosRoundedIcon from '@mui/icons-material/AddToPhotosRounded';
@@ -32,6 +32,7 @@ const Slide = styled.div`
 const ProfilePage = () => {
     const { userAuth, userDocRef } = useContext(UserContext) || {};
     const navigate = useNavigate();
+    const location = useLocation();
     
     const title = 'Who\'s Watching?';
 
@@ -46,18 +47,36 @@ const ProfilePage = () => {
     const [animation, setAnimation] = useState(false);
 
     useEffect(() => {
-        const fetchProfiles = async () => {
-          if (!userDocRef) return;
-          const profilesCollectionRef = collection(userDocRef, 'profiles');
-          const profilesSnapshot = await getDocs(profilesCollectionRef);
-          const profilesData = profilesSnapshot.docs.map((doc) => doc.data());
+        const profilesCollectionRef = collection(userDocRef, 'profiles');
+        const profilesListener = onSnapshot(profilesCollectionRef, (snapshot) => {
+          const profilesData = snapshot.docs.map((doc) => doc.data());
           setProfiles(profilesData);
-        };
+        });
     
-        fetchProfiles();
+        return () => {
+          profilesListener();
+        };
     }, [userDocRef]);
-       
 
+    useEffect(() => {
+        if (!location.state) return;
+    
+        const { profileIndex, newImage, newNickname } = location.state;
+    
+        const updatedProfiles = [...profiles];
+        updatedProfiles[profileIndex] = { ...updatedProfiles[profileIndex], image: newImage, nickname: newNickname };
+        setProfiles(updatedProfiles);
+    
+        const userCollectionRef = collection(db, 'users');
+        const userDocRef = doc(userCollectionRef, userAuth.uid);
+        const profileDocRef = doc(collection(userDocRef, 'profiles'), newNickname);
+    
+        updateDoc(profileDocRef, {
+          image: newImage,
+          nickname: newNickname,
+        });
+    }, [location.state, profiles, userAuth.uid]);
+       
     const handleAddProfile = async () => {
         try {
           if (profiles.length < 5 && userDocRef) {
